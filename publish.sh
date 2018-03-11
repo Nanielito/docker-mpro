@@ -33,7 +33,7 @@ if [ -z "$REGISTRY_USER" ] || [ -z "$REGISTRY_PASSWORD" ]; then
   exit 1
 fi
 
-docker login -u $REGISTRY_USER -p $REGISTRY_PASSWORD
+docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASSWORD"
 
 docker tag mpro/mpro-app $REGISTRY_USER/mpro-app
 
