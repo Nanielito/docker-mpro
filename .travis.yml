@@ -6,7 +6,7 @@ services:
   - docker
 
 before_install:
-  - bash setup.sh -r $REPOSITORY -b $BRANCH -t $TAG
+  - bash setup.sh -r "$REPOSITORY" -b "$BRANCH" -t "$TAG"
 
 script:
   - bash publish.sh -u "$REGISTRY_USER" -p "$REGISTRY_PASSWORD"
