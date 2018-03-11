@@ -22,13 +22,15 @@ while true
       --)
         shift; break ;;
       *)
+        echo "1"
         usage; exit 1 ;;
     esac
   done
 
 if [ -z "$REGISTRY_USER" ] || [ -z "$REGISTRY_PASSWORD" ]; then
+  echo "2"
   usage
-  exit 0
+  exit 1
 fi
 
 docker login -u $REGISTRY_USER -p $REGISTRY_PASSWORD
