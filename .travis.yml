@@ -1,7 +1,7 @@
 language: bash
 
-before_script:
+script:
   - bash setup.sh -r $REPOSITORY -b $BRANCH -t $TAG
 
-script:
-  - bash publish.sh -u $REGISTRY_USER -p $REGISTRY_PASSWORD
+after_success:
+  - bash publish.sh -u "$REGISTRY_USER" -p "$REGISTRY_PASSWORD"
