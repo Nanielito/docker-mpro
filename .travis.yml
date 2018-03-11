@@ -1,4 +1,9 @@
+sudo: required
+
 language: bash
+
+services:
+  - docker
 
 script:
   - bash setup.sh -r $REPOSITORY -b $BRANCH -t $TAG
