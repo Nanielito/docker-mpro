@@ -5,8 +5,8 @@ language: bash
 services:
   - docker
 
-script:
+before_install:
   - bash setup.sh -r $REPOSITORY -b $BRANCH -t $TAG
 
-after_success:
+script:
   - bash publish.sh -u "$REGISTRY_USER" -p "$REGISTRY_PASSWORD"
