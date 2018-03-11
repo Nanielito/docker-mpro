@@ -4,4 +4,4 @@ before_script:
   - bash setup.sh -r $REPOSITORY -b $BRANCH -t $TAG
 
 script:
-  -bash publish.sh -u $REGISTRY_USER -p $REGISTRY_PASSWORD
+  - bash publish.sh -u $REGISTRY_USER -p $REGISTRY_PASSWORD
