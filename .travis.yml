@@ -1,12 +1,13 @@
 sudo: required
-
 language: bash
-
 services:
-  - docker
-
+- docker
 before_script:
-  - bash setup.sh -r "$REPOSITORY" -b "$BRANCH" -t "$TAG"
-
+- bash setup.sh -r "$REPOSITORY" -b "$BRANCH" -t "$TAG"
 script:
-  - bash publish.sh -u "$REGISTRY_USER" -p "$REGISTRY_PASSWORD"
+- bash publish.sh -u "$REGISTRY_USER" -p "$REGISTRY_PASSWORD"
+after_success:
+- bash tagVersion.sh
+env:
+  global:
+    secure: c+PU34n56hDA3PBtVRGqk1oiitCu4p6GgfdvCWRNFH7Mt5Ii1iQKCWFXJzj57Oe8gxAchwfJjnOZ7oCin+CjFsLX8//l+5jZElAn7a7N8gZvJuar3RxG16zDtTxBC7iA5gGzqd85ZS95lX8Hcl0d83Old3DtxbYmr/o8Bkziqy26A0zINgLDTMky+uSCqgzaeo+erZrPR+rUZvxQ8oyK/H4O0TwvaHlLYjxNk37LsA6exoqhN9H22vctCBPI/P8jH8ZckpLlcZ5S07A3R3H3VMCwEjOgi4SCzCqip5cyr8e5yJeGamVoWEpO5hWaKGB2FdOAJZj+xV27zW22j2m345Yxl0GoLTo7r+XBBq0TgglWKHOlItpAopDeyTSyRxHlsWycAFvzMpBIT5mf5f5kmQvvOzJZ67TCjF9/ZrNiSSKJkcoVrRziKs8r2xD94kiWABajwZGk7KRLCcZADC/gxFdk90VtzyekA0xswtCuEDPzj7pAWApFfwGyX/7du+2MD1Zpe3vAvFyi0RzGRz03OqdmgtKT4HRFwrgnw+6PKRds0TCI0R7oXE8nod9G9o0e5XlUxY+PZlvQa8ce/10ab4sQdrrrY7qQltFwDNWI0C0Mue6T8NZBKucMHcEvWI3fl3ewb3espUomVftzco/j1eJCHKTGEL1E3F25M7t2tGI=
