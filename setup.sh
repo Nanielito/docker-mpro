@@ -35,16 +35,18 @@ if [ -z "$REPOSITORY" ]; then
 fi
 
 if [ -z "$BRANCH" ]; then
-  BRANCH="master"
-fi
-
-if [ -z "$TAG" ]; then
-  TAG="latest"
+  BRANCH="ci-test"
 fi
 
 echo "Cloning $REPOSITORY on branch $BRANCH..."
 git clone -b $BRANCH $REPOSITORY ./mpro
 
-docker build -t mpro/mpro-app:$TAG .
+if [ "$BRANCH" = "ci-test" ]; then
+  TAG=$(bash ./mpro/scripts/appVersion.sh --version)
+else
+  if [ -z "$TAG" ]; then
+    TAG="latest"
+  fi
+fi
 
-rm -rf mpro
+docker build -t mpro/mpro-app:$TAG .
