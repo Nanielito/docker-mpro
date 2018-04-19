@@ -3,6 +3,8 @@ FROM node:carbon
 ENV COMMAND start
 ENV DB_HOST 127.0.0.1
 
+ARG VERSION
+
 # Create app directories
 RUN mkdir -p /home/mpro
 WORKDIR /home/mpro
@@ -18,11 +20,18 @@ RUN npm install
 COPY mpro/ /home/mpro/
 
 # Build app
-RUN npm build
+RUN npm run build
 
 # Remove app sources
 RUN rm -rf config docker scripts src .gitignore .jshintignore .jshintrc package*.json README.md 
 
+# Move build app sources
+RUN mv build/$VERSION/* /home/mpro/
+
+# Remove build directory
+RUN rm -rf build
+
+# Copy entrypoint script
 COPY init.sh /home/mpro
 
 EXPOSE 3000
