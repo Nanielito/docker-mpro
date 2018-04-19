@@ -39,7 +39,7 @@ if [ -z "$BRANCH" ]; then
 fi
 
 echo "Cloning $REPOSITORY on branch $BRANCH..."
-git clone -b $BRANCH $REPOSITORY ./mpro
+git clone -b $BRANCH $REPOSITORY ./mpro --single-branch
 
 cd mpro
 
