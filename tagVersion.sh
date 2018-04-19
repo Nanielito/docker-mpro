@@ -21,45 +21,39 @@ function tagVersion() {
   git push origin $TAG
 }
 
-function main() {
-  REPOSITORY=""
-  BRANCH=""
-  TAG=""
+REPOSITORY=""
+BRANCH=""
+TAG=""
 
-  while true
-    do
-      case "$1" in
-        -h | --help)
-          usage; exit 0 ;;
-        -r | --repository)
-          REPOSITORY=$2; shift 2 ;;
-        --)
-          shift; break ;;
-        *)
-          usage; exit 1 ;;
-      esac
-    done
+while true
+  do
+    case "$1" in
+      -h | --help)
+        usage; exit 0 ;;
+      -r | --repository)
+        REPOSITORY=$2; shift 2 ;;
+      --)
+        shift; break ;;
+      *)
+        usage; exit 1 ;;
+    esac
+  done
 
-  if [ -z "$REPOSITORY" ]; then
-    usage
-    exit 1
-  fi
+if [ -z "$REPOSITORY" ]; then
+  usage
+  exit 1
+fi
 
-  cd mpro
+cd mpro
 
-  BRANCH=$(git rev-parse --abbrev-ref HEAD)
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
-  if [ "$BRANCH" = "ci-test" ]; then
-    TAG=$(bash scripts/appVersion.sh --version)
+if [ "$BRANCH" = "ci-test" ]; then
+  TAG=$(bash scripts/appVersion.sh --version)
 
-    setupGit
-    tagVersion $TAG $REPOSITORY
-  fi
+  setupGit
+  tagVersion $TAG $REPOSITORY
+fi
 
-  cd ..
-  rm -rf mpro
-
-  exit 0
-}
-
-main
+cd ..
+rm -rf mpro
