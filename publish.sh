@@ -9,6 +9,7 @@ function usage() {
 
 REGISTRY_USER=""
 REGISTRY_PASSWORD=""
+TAG=""
 
 while true
   do
@@ -33,8 +34,20 @@ if [ -z "$REGISTRY_USER" ] || [ -z "$REGISTRY_PASSWORD" ]; then
   exit 1
 fi
 
+cd mpro
+
+if [ "$BRANCH" = "ci-test" ]; then
+  TAG=$(bash scripts/appVersion.sh --version)
+else
+  if [ -z "$TAG" ]; then
+    TAG="latest"
+  fi
+fi
+
+cd ..
+
 docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASSWORD"
 
-docker tag mpro/mpro-app $REGISTRY_USER/mpro-app
+docker tag mpro/mpro-app:$TAG $REGISTRY_USER/mpro-app:$TAG
 
-docker push $REGISTRY_USER/mpro-app
+docker push $REGISTRY_USER/mpro-app:$TAG
