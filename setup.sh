@@ -41,12 +41,16 @@ fi
 echo "Cloning $REPOSITORY on branch $BRANCH..."
 git clone -b $BRANCH $REPOSITORY ./mpro
 
+cd mpro
+
 if [ "$BRANCH" = "ci-test" ]; then
-  TAG=$(bash ./mpro/scripts/appVersion.sh --version)
+  TAG=$(bash scripts/appVersion.sh --version)
 else
   if [ -z "$TAG" ]; then
     TAG="latest"
   fi
 fi
 
-docker build -t mpro/mpro-app:$TAG .
+cd ..
+
+docker build --build-arg VERSION=$TAG -t mpro/mpro-app:$TAG .
