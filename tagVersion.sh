@@ -15,10 +15,11 @@ function setupGit() {
 function tagVersion() {
   TAG=$1
   REPOSITORY=$(echo $2 | sed -e s#github#\$\{GH_TOKEN\}@github#g)
+  echo $REPOSITORY
 
   git tag $TAG -a -m "Release version $TAG"
   git remote add origin $REPOSITORY > /dev/null 2>&1
-  git push origin $TAG
+  git push --quiet --set-upstream origin $TAG
 }
 
 REPOSITORY=""
