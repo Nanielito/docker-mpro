@@ -16,12 +16,12 @@ function main() {
   BRANCH=""
   TAG=""
 
-  cd ./mpro
+  cd mpro
 
   BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
   if [ "$BRANCH" = "ci-test" ]; then
-    TAG=$(bash ./mpro/scripts/appVersion.sh --version)
+    TAG=$(bash scripts/appVersion.sh --version)
 
     setupGit
     tagVersion $TAG
