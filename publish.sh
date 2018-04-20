@@ -1,10 +1,15 @@
 #!/bin/bash
 
-OPTS=`getopt -o hu:p: --long help,registry-user:,registry-password: -n 'parse-options' -- "$@"`
+OPTS=`getopt -o hau:p: --long help,auto,registry-user:,registry-password: -n 'parse-options' -- "$@"`
 eval set -- "$OPTS"
 
+COMMANDS=(                                                                                      \
+    "$0 -u|--regisrty-user USER -p|--registry-password PASSWORD  To use Docker Hub credentials" \
+    "$0 -a|--auto                                                To be used by Travis CI job"   \
+)
+
 function usage() {
-  printf "Usage: $0 -u|--regisrty-user USER -p|--registry-password PASSWORD"
+  printf '%s\n\t' "Usage:" "${COMMANDS[@]}"
 }
 
 REGISTRY_USER=""
@@ -16,6 +21,8 @@ while true
     case "$1" in
       -h | --help)
         usage; exit 0 ;;
+      -a | --auto)
+        REGISTRY_USER=$DH_USER; REGISTRY_PASSWORD=$DH_PASSWORD, break ;;
       -u | --registry-user)
         REGISTRY_USER=$2; shift 2 ;;
       -p | --registry-password)
@@ -29,7 +36,6 @@ while true
   done
 
 if [ -z "$REGISTRY_USER" ] || [ -z "$REGISTRY_PASSWORD" ]; then
-  echo "2"
   usage
   exit 1
 fi

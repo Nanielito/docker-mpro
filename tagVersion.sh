@@ -8,13 +8,14 @@ function usage() {
 }
 
 function setupGit() {
+  git config --global push.default simple
   git config --global user.email "travis@travis-ci.org"
   git config --global user.name "Travis CI"
 }
 
 function tagVersion() {
   TAG=$1
-  REPOSITORY=$(echo $2 | sed -e s#github#\$GH_TOKEN@github#g)
+  REPOSITORY=$(echo $2 | sed -e s#github#$GH_USER\:$GH_TOKEN@github#g)
 
   git tag $TAG -a -m "Release version $TAG"
   git push --quiet $REPOSITORY $TAG > /dev/null 2>&1
