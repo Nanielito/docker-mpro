@@ -4,7 +4,7 @@ OPTS=`getopt -o hau:p: --long help,auto,registry-user:,registry-password: -n 'pa
 eval set -- "$OPTS"
 
 COMMANDS=(                                                                                      \
-    "$0 -u|--regisrty-user USER -p|--registry-password PASSWORD  To use Docker Hub credentials" \
+    "$0 -u|--registry-user USER -p|--registry-password PASSWORD  To use Docker Hub credentials" \
     "$0 -a|--auto                                                To be used by Travis CI job"   \
 )
 
@@ -30,7 +30,6 @@ while true
       --)
         shift; break ;;
       *)
-        echo "1"
         usage; exit 1 ;;
     esac
   done
