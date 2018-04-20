@@ -22,7 +22,7 @@ while true
       -h | --help)
         usage; exit 0 ;;
       -a | --auto)
-        REGISTRY_USER=$DH_USER; REGISTRY_PASSWORD=$DH_PASSWORD; break ;;
+        REGISTRY_USER=${DH_USER}; REGISTRY_PASSWORD=${DH_PASSWORD}; break ;;
       -u | --registry-user)
         REGISTRY_USER=$2; shift 2 ;;
       -p | --registry-password)

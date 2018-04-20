@@ -15,7 +15,7 @@ function setupGit() {
 
 function tagVersion() {
   TAG=$1
-  REPOSITORY=$(echo $2 | sed -e s#github#$GH_USER\:$GH_TOKEN@github#g)
+  REPOSITORY=$(echo $2 | sed -e s#github#${GH_USER}\:${GH_TOKEN}@github#g)
 
   git tag $TAG -a -m "Release version $TAG"
   git push --quiet $REPOSITORY $TAG > /dev/null 2>&1
