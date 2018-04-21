@@ -32,7 +32,7 @@ RUN mv build/$VERSION/* /home/mpro/
 RUN rm -rf build/$VERSION
 
 # Copy entrypoint script
-COPY init.sh /home/mpro
+COPY scripts/init.sh /home/mpro
 
 EXPOSE 3000
 
