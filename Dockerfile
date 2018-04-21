@@ -28,8 +28,8 @@ RUN rm -rf config docker scripts src .gitignore .jshintignore .jshintrc package*
 # Move build app sources
 RUN mv build/$VERSION/* /home/mpro/
 
-# Remove build directory
-RUN rm -rf build
+# Remove empty build/$VERSION directory
+RUN rm -rf build/$VERSION
 
 # Copy entrypoint script
 COPY init.sh /home/mpro
