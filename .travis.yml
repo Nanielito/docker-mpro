@@ -2,6 +2,12 @@ sudo: required
 language: bash
 services:
 - docker
+addons:
+  sshknownhosts:
+  - 138.68.246.213
+before_install:
+- openssl aes-256-cbc -K $encrypted_76447cf472f0_key -iv $encrypted_76447cf472f0_iv
+  -in deploy.enc -out deploy -d
 before_script:
 - bash scripts/setup.sh -r "$REPOSITORY" -b "$BRANCH" -t "$TAG"
 script:
@@ -15,8 +21,6 @@ env:
   - secure: c+PU34n56hDA3PBtVRGqk1oiitCu4p6GgfdvCWRNFH7Mt5Ii1iQKCWFXJzj57Oe8gxAchwfJjnOZ7oCin+CjFsLX8//l+5jZElAn7a7N8gZvJuar3RxG16zDtTxBC7iA5gGzqd85ZS95lX8Hcl0d83Old3DtxbYmr/o8Bkziqy26A0zINgLDTMky+uSCqgzaeo+erZrPR+rUZvxQ8oyK/H4O0TwvaHlLYjxNk37LsA6exoqhN9H22vctCBPI/P8jH8ZckpLlcZ5S07A3R3H3VMCwEjOgi4SCzCqip5cyr8e5yJeGamVoWEpO5hWaKGB2FdOAJZj+xV27zW22j2m345Yxl0GoLTo7r+XBBq0TgglWKHOlItpAopDeyTSyRxHlsWycAFvzMpBIT5mf5f5kmQvvOzJZ67TCjF9/ZrNiSSKJkcoVrRziKs8r2xD94kiWABajwZGk7KRLCcZADC/gxFdk90VtzyekA0xswtCuEDPzj7pAWApFfwGyX/7du+2MD1Zpe3vAvFyi0RzGRz03OqdmgtKT4HRFwrgnw+6PKRds0TCI0R7oXE8nod9G9o0e5XlUxY+PZlvQa8ce/10ab4sQdrrrY7qQltFwDNWI0C0Mue6T8NZBKucMHcEvWI3fl3ewb3espUomVftzco/j1eJCHKTGEL1E3F25M7t2tGI=
   - secure: Jcl5dcQOOAAKkrdwIkJbh0390737GugfX1LxDAyXSbv6Rk+wX4dqrmbo8JEEjZgYe9aEAG4NapO3E+71VFWVFJxSDS4EWZDfDcEaTaxzBMsYtOpTs+wkGCTj4jj4RW9sL98TW9/MkxM3iR5or5MPB9mF6h8O3qmMNzerCZrOq9V0o129B36FrMcuU3YO4d0mXQRqrVZYyX0GZ/pBsXf9N3sL/rIiqbtlBr+b4IFUiiagv57eZ78oDJoDWcwTk7GfLfRuPWn316oXrm5oBhuiYh9RprNZ9SQwJkIRZ6EkKKi2NMgexG1GvZcV0qjrfP3t90vg1jCSMzbF+vRybjtr/V5BnvSocVXc1xV8MQYHCCEfnK1lVQGUYniWm/saxkFRGswIlb7gH8LltIf1FfrviBIHMvRLTo+aMuKHKlJL6AIfqz6fyePDauXoR/71Rgg1A7cZLj5Xo6/+mHYCflZBcEJQMtAM1+qLpDMGNtVFY+z11lNL+FHCaxRU5Ka6h4JG5zZTZWXxuvnqttSlOahjYp/Z36bUTWEfrXJWiDsiTySL7JIFyfXg1TKKeGtAoohGCkj1EhxZJFW8+9k4meowqnCWJpD/gJtoHfwmJbly0Rc0ZNF3juFC6Z1jVoihd4FbOGfx/P+a66aJDZfCGT1emCNq+ZTkmmPfYYfiMXd2qds=
   - secure: nFIASW6LevgFTxoSFKpmSnwIv1mI7c18cPc+ypZYJYp9wVgGwnwgeiToR57sXnMWQaPvRRMYJCtazEbqBpfayIh65A/0Hh1gIjuCYasSKgnkGgdtxQAVYjS4KbkDQE/bSCaIEkXfQmPx4/QjXkgpLT1th0N6ehR4GnTzQjEtAYKvFe2uudhIvxegUqDprn14PrGn3Jv+hSYOVe0Knw4NCUnoJzXD3TFR6rJMAh6w2rcSk9UJxeFDhyN35zDY7hM/o0OgplwVPGxpwTw4v6gm1eNyJjmt11i1vQl0VI0uBNTydEp58uqhfNkDO0W2gVvqhNPf8cWoH2/l3jLZa7Kyr52P1JEgEFPmO2VSmMstxG2SSOijLH6UUfFQ98OgEb5FLuFw1ZMnQiRjQjDQd5WnqpT/BAGxtGyzR9d2Q/7xabTUaQ+t0yoBSTUf66sqHx/q38z+UpZ4W0Tz8gFTdeSE9cm1mLOnKwTl6tCGT++00h5fs4x7WW6iMuSVA9BWvUY3uaigC3Bi6AQSjeONoTnTLxYaOHKWwAD/rKXYC27n9fzuduqIGmfPZlkKg2iYAyrmZ3Wos3Wme6Fm+UHXbCh5l/yk3DHtMFIVnq/rqzQ9wdSAn8k6FZC2hAP1HOCWkAXNSc6BAi5ci+fmyPWOOCJhUxUabwbhmA1x56fTbTn/034=
-  - REMOTE_USER: deploy
-  - REMOTE_SERVER: 138.68.246.213
-  before_install:
-- openssl aes-256-cbc -K $encrypted_76447cf472f0_key -iv $encrypted_76447cf472f0_iv
-  -in deploy.enc -out deploy -d
+  - REMOTE_USER=deploy
+  - REMOTE_SERVER=138.68.246.213
+  
