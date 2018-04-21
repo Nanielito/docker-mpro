@@ -39,9 +39,9 @@ if [ -z "$BRANCH" ]; then
 fi
 
 echo "Cloning $REPOSITORY on branch $BRANCH..."
-git clone -b $BRANCH $REPOSITORY ../mpro --single-branch
+git clone -b $BRANCH $REPOSITORY ./mpro --single-branch
 
-cd ../mpro
+cd mpro
 
 if [ "$BRANCH" = "ci-test" ]; then
   TAG=$(bash scripts/appVersion.sh --version)
