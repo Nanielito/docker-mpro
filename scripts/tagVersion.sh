@@ -44,7 +44,7 @@ if [ -z "$REPOSITORY" ]; then
   exit 1
 fi
 
-cd ../mpro
+cd mpro
 
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 

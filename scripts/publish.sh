@@ -39,7 +39,7 @@ if [ -z "$REGISTRY_USER" ] || [ -z "$REGISTRY_PASSWORD" ]; then
   exit 1
 fi
 
-cd ../mpro
+cd mpro
 
 if [ "$BRANCH" = "ci-test" ]; then
   TAG=$(bash scripts/appVersion.sh --version)
