@@ -16,16 +16,18 @@ function setupGit() {
 function commitVersion() {
   BRANCH=$1
   REPOSITORY=$(echo $2 | sed -e s#github#${GH_USER}\:${GH_TOKEN}@github#g)
+  TYPE=$3
   USER=$(git config user.name)
 
   git add package.json
-  git commit -m "$USER: Package version was updated to release"
+  git commit -m "$USER: Package version was updated to $TYPE"
   git push --quiet $REPOSITORY $BRANCH > /dev/null 2>&1
 }
 
 REPOSITORY=""
 BRANCH=""
 TAG=""
+TYPE="release"
 
 while true
   do
@@ -51,7 +53,7 @@ if [ -z "$REPOSITORY" ]; then
 fi
 
 if [ -z "$BRANCH" ]; then
-  BRANCH="development"
+  BRANCH="${DEVELOPMENT_BRANCH}"
 fi
 
 echo "Cloning $REPOSITORY on branch $BRANCH..."
@@ -66,17 +68,19 @@ setupGit
 echo $(bash scripts/appVersion.sh --version) > previousVersion
 
 if [ "$BRANCH" = "${RELEASE_BRANCH}" ]; then
-  $(bash scripts/appVersion.sh --release)
+  $(bash scripts/appVersion.sh --release) > /dev/null 2>&1 
   TAG=$(bash scripts/appVersion.sh --version)
 else
   if [ -z "$TAG" ]; then
-    $(bash scripts/appVersion.sh --snapshot)
+    $(bash scripts/appVersion.sh --snapshot) > /dev/null 2>&1 
     TAG="latest"
   fi
+
+  TYPE="snapshot"
 fi
 
 # Pushes the new version into repository
-commitVersion $BRANCH $REPOSITORY
+commitVersion $BRANCH $REPOSITORY $TYPE
 
 cd ..
 

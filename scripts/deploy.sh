@@ -63,4 +63,4 @@ if [ "$IS_DEPLOYABLE" -eq "1" ]; then
   ssh $USER@$SERVER 'bash -s' < scripts/install.sh $VERSION
 else
   echo "Version will not deployed on server because it is not a release branch"
-if
+fi
