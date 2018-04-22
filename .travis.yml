@@ -1,5 +1,7 @@
 sudo: required
-language: bash
+language: node_js
+node_js:
+  - '8'
 services:
 - docker
 addons:
@@ -15,6 +17,7 @@ script:
 after_success:
 - bash scripts/tagVersion.sh -r "$REPOSITORY"
 - bash scripts/deploy.sh -a
+- bash scripts/updatePhase.sh -r "$REPOSITORY"
 env:
   global:
   - secure: aZAUy3EZMHanu8aV5IIeSc6l2elaVx27g9TfVBqpTclm35a50fZN4r9SfIk2otzngte61q1+H0/rutZXPq0Lsp2MaKz0eXzakC9VA4bcYf3gGz5Nu3a5NRFNFsWxnadXOSvpSrHQUN7tEumI8tYoG325SvI22PSWmKeXVbw90Kphipmg5V9bqkzig7mR8AX45keXPXDBPLZWBZB5/ycAFW7Of7qPrhntkMVKtHgCUfN6mwe9JpEoUP+cRCPZrbVKAlN76wZxkUF89gTmuu2UxfIRWv3RNS4qrTdaFJBMtbgctpjoFbP/JL4Q6VmmwZULLL+s8yvKqxqNqNvscEbAfagiIwPmaEl3/12Yv+cOuWBr6/J5jt9Wnh4o9Jzzae+ermZE+5ygn6MSp7ph0nFavi82aRulKrjVQCFP3z76JAHfuqB41E9P4WpLkoJxq08g3ZYlin7ULwEhniBz6zOE9b1XxtBdMfJYUBdEOWjHgYQjPlOiysBMw8sX1IND0jsUktCwDjGrw+wZc1lXlYGvjRMwoAPcATPl1+OwE6O+Oaqmx2ebZp+UBAzabwBZ1AJESi43ECCqH+xPh4LeScb6oss373E4AUNyLH49Lx+u22Ix93O0EEp9zvOUej2+Kfu3VQ/g4p1qnC0BNGbzdPU0sWPEpPIlkGW8Xi1D/fO+Z60=

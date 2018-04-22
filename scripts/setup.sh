@@ -8,9 +8,9 @@ function usage() {
 }
 
 function setupGit() {
-  git config --global push.default simple
-  git config --global user.email "travis@travis-ci.org"
-  git config --global user.name "Travis CI"
+  git config push.default simple
+  git config user.email "travis@travis-ci.org"
+  git config user.name "Travis CI"
 }
 
 function commitVersion() {
