@@ -35,7 +35,7 @@ if [ -z "$REPOSITORY" ]; then
 fi
 
 if [ -z "$BRANCH" ]; then
-  BRANCH="ci-test"
+  BRANCH="development"
 fi
 
 echo "Cloning $REPOSITORY on branch $BRANCH..."

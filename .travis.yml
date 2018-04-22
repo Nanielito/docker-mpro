@@ -4,8 +4,12 @@ services:
 - docker
 addons:
   ssh_known_hosts: 138.68.246.213
+branches:
+  only:
+    - ci-test # TODO: Change to master
+    - development
 before_script:
-- bash scripts/setup.sh -r "$REPOSITORY" -b "$BRANCH" -t "$TAG"
+- bash scripts/setup.sh -r "$REPOSITORY" -b "$TRAVIS_BRANCH" -t "$TAG"
 script:
 - bash scripts/publish.sh -a
 after_success:

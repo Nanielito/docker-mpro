@@ -14,6 +14,7 @@ function usage() {
 
 REGISTRY_USER=""
 REGISTRY_PASSWORD=""
+BRANCH=""
 TAG=""
 
 while true
@@ -40,6 +41,8 @@ if [ -z "$REGISTRY_USER" ] || [ -z "$REGISTRY_PASSWORD" ]; then
 fi
 
 cd mpro
+
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
 if [ "$BRANCH" = "ci-test" ]; then
   TAG=$(bash scripts/appVersion.sh --version)
