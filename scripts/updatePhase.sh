@@ -14,13 +14,16 @@ function updateDevelopmentVersion() {
   REPOSITORY=$(echo $3 | sed -e s#github#${GH_USER}\:${GH_TOKEN}@github#g)
   USER=$(git config user.name)
 
-  git checkout $DEVELOPMENT
-  git merge $MASTER
+  git merge --no-edit $DEVELOPMENT
 
-  $(bash scripts/appVersion.sh --next)
+  $(bash scripts/appVersion.sh --next) > /dev/null 2>&1 
 
   git add package.json 
   git commit -m "$USER: Package version was updated to next development phase"
+  git push --quiet $REPOSITORY $MASTER > /dev/null 2>&1
+
+  git checkout $DEVELOPMENT
+  git merge --no-edit $MASTER
   git push --quiet $REPOSITORY $DEVELOPMENT > /dev/null 2>&1
 }
 
