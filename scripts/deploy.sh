@@ -46,7 +46,7 @@ cd mpro
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
 if [ "$BRANCH" = "${RELEASE_BRANCH}" ]; then
-  IS_DEPLOYABLE = 1
+  IS_DEPLOYABLE=1
 fi
 
 VERSION=$(bash scripts/appVersion.sh --version)
