@@ -14,7 +14,9 @@ function usage() {
 
 USER=""
 SERVER=""
+BRANCH=""
 VERSION=""
+IS_DEPLOYABLE=0
 
 while true
   do
@@ -41,15 +43,24 @@ fi
 
 cd mpro
 
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+if [ "$BRANCH" = "${RELEASE_BRANCH}" ]; then
+  IS_DEPLOYABLE = 1
+fi
+
 VERSION=$(bash scripts/appVersion.sh --version)
 
 cd ..
 
-docker run -p 3000:3000 -e COMMAND=start -e DB_HOST=mprodb --name mpro -d --rm mpro/mpro-app:$VERSION
-docker cp mpro:/home/mpro/build/$VERSION.tgz .
-docker stop mpro
+if [ "$IS_DEPLOYABLE" -eq "1" ]; then
+  echo "Starting deploying..."
+  docker run -p 3000:3000 -e COMMAND=start -e DB_HOST=mprodb --name mpro -d --rm mpro/mpro-app:$VERSION
+  docker cp mpro:/home/mpro/build/$VERSION.tgz .
+  docker stop mpro
 
-scp $VERSION.tgz $USER@$SERVER:/home/deploy && \
-ssh $USER@$SERVER 'bash -s' < scripts/install.sh $VERSION
-
-rm -rf mpro $VERSION.tgz
+  scp $VERSION.tgz $USER@$SERVER:/home/deploy && \
+  ssh $USER@$SERVER 'bash -s' < scripts/install.sh $VERSION
+else
+  echo "Version will not deployed on server because it is not a release branch"
+if

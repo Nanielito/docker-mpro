@@ -7,6 +7,22 @@ function usage() {
   printf "Usage: $0 -r|--repository REPOSITORY [-b|--branch BRANCH] [-t|--tag TAG]"
 }
 
+function setupGit() {
+  git config --global push.default simple
+  git config --global user.email "travis@travis-ci.org"
+  git config --global user.name "Travis CI"
+}
+
+function commitVersion() {
+  BRANCH=$1
+  REPOSITORY=$(echo $2 | sed -e s#github#${GH_USER}\:${GH_TOKEN}@github#g)
+  USER=$(git config user.name)
+
+  git add package.json
+  git commit -m "$USER: Package version was updated to release"
+  git push --quiet $REPOSITORY $BRANCH > /dev/null 2>&1
+}
+
 REPOSITORY=""
 BRANCH=""
 TAG=""
@@ -39,17 +55,28 @@ if [ -z "$BRANCH" ]; then
 fi
 
 echo "Cloning $REPOSITORY on branch $BRANCH..."
-git clone -b $BRANCH $REPOSITORY ./mpro --single-branch
+git clone -b $BRANCH $REPOSITORY ./mpro
 
 cd mpro
 
-if [ "$BRANCH" = "ci-test" ]; then
+setupGit
+
+# Storages the current version into a file to make it available if something wrong
+# ocurrs to rollback it again.
+echo $(bash scripts/appVersion.sh --version) > previousVersion
+
+if [ "$BRANCH" = "${RELEASE_BRANCH}" ]; then
+  $(bash scripts/appVersion.sh --release)
   TAG=$(bash scripts/appVersion.sh --version)
 else
   if [ -z "$TAG" ]; then
+    $(bash scripts/appVersion.sh --snapshot)
     TAG="latest"
   fi
 fi
+
+# Pushes the new version into repository
+commitVersion $BRANCH $REPOSITORY
 
 cd ..
 

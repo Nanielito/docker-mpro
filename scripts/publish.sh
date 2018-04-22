@@ -44,7 +44,7 @@ cd mpro
 
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
-if [ "$BRANCH" = "ci-test" ]; then
+if [ "$BRANCH" = "${RELEASE_BRANCH}" ]; then
   TAG=$(bash scripts/appVersion.sh --version)
 else
   if [ -z "$TAG" ]; then

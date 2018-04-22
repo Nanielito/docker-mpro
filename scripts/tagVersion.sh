@@ -7,12 +7,6 @@ function usage() {
   printf "Usage: $0 -r|--repository REPOSITORY"
 }
 
-function setupGit() {
-  git config --global push.default simple
-  git config --global user.email "travis@travis-ci.org"
-  git config --global user.name "Travis CI"
-}
-
 function tagVersion() {
   TAG=$1
   BRANCH=$2
@@ -49,9 +43,10 @@ cd mpro
 
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
-if [ "$BRANCH" = "ci-test" ]; then
+if [ "$BRANCH" = "${RELEASE_BRANCH}" ]; then
   TAG=$(bash scripts/appVersion.sh --version)
 
-  setupGit
   tagVersion $TAG $BRANCH $REPOSITORY
+else
+  echo "Version will not tagged because it is not a release branch"
 fi
