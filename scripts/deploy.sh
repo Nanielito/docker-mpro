@@ -49,7 +49,7 @@ docker run -p 3000:3000 -e COMMAND=start -e DB_HOST=mprodb --name mpro -d --rm m
 docker cp mpro:/home/mpro/build/$VERSION.tgz .
 docker stop mpro
 
-scp -o "StrictHostKeyChecking no" $VERSION.tgz $USER@$SERVER:/home/deploy && \
-ssh -o "StrictHostKeyChecking no" $USER@$SERVER 'bash -s' < scripts/install.sh $VERSION
+scp $VERSION.tgz $USER@$SERVER:/home/deploy && \
+ssh $USER@$SERVER 'bash -s' < scripts/install.sh $VERSION
 
 rm -rf mpro $VERSION.tgz
