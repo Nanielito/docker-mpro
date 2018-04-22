@@ -14,6 +14,9 @@ function updateDevelopmentVersion() {
   REPOSITORY=$(echo $3 | sed -e s#github#${GH_USER}\:${GH_TOKEN}@github#g)
   USER=$(git config user.name)
 
+  git checkout $DEVELOPMENT
+  git checkout $MASTER
+
   git merge $DEVELOPMENT --no-edit 
 
   $(bash scripts/appVersion.sh --next) > /dev/null 2>&1 
