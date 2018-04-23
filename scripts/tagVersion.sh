@@ -12,7 +12,7 @@ function tagVersion() {
   BRANCH=$2
   REPOSITORY=$(echo $3 | sed -e s#github#${GH_USER}\:${GH_TOKEN}@github#g)
 
-  git tag $TAG $BRANCH -m "Release version $TAG"
+  git tag v$TAG $BRANCH -m "Release version $TAG"
   git push --quiet $REPOSITORY v$TAG > /dev/null 2>&1
 }
 
