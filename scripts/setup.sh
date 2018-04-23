@@ -13,13 +13,23 @@ function setupGit() {
   git config user.name "Travis CI"
 }
 
+function updateReleaseBranch() {
+  REPOSITORY=$(echo $1 | sed -e s#github#${GH_USER}\:${GH_TOKEN}@github#g)
+  
+  git checkout ${DEVELOPMENT_BRANCH}
+  git checkout ${RELEASE_BRANCH}
+
+  git merge ${DEVELOPMENT_BRANCH} --no-edit
+  git push --quiet $REPOSITORY ${RELEASE_BRANCH} > /dev/null 2>&1
+}
+
 function commitVersion() {
   BRANCH=$1
   REPOSITORY=$(echo $2 | sed -e s#github#${GH_USER}\:${GH_TOKEN}@github#g)
   TYPE=$3
   USER=$(git config user.name)
 
-  git add package.json
+  git add package.json README.md
   git commit -m "$USER: Package version was updated to $TYPE"
   git push --quiet $REPOSITORY $BRANCH > /dev/null 2>&1
 }
@@ -68,8 +78,12 @@ setupGit
 echo $(bash scripts/appVersion.sh --version) > previousVersion
 
 if [ "$BRANCH" = "${RELEASE_BRANCH}" ]; then
+  updateReleaseBranch $REPOSITORY
+
   $(bash scripts/appVersion.sh --release) > /dev/null 2>&1 
   TAG=$(bash scripts/appVersion.sh --version)
+
+  $(bash scripts/appVersion.sh --README $TAG) > /dev/null 2>&1 
 else
   if [ -z "$TAG" ]; then
     $(bash scripts/appVersion.sh --snapshot) > /dev/null 2>&1 
